@@ -33,7 +33,7 @@ http {
         }
 
         location /static/ {
-            root /root/app/frontend/dist;
+            alias html/static/;
         }
 
         location /favicon.ico {
