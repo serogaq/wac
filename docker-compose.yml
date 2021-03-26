@@ -1,0 +1,38 @@
+version: '3.7'
+
+networks:
+    nginx_net:
+        external: true
+
+services:
+    openresty:
+        container_name: openresty-${PROJECT_NAME}
+        build: ./.docker/openresty
+        restart: always
+        environment:
+            - DB_PORT=${DB_PORT}
+            - DEV=${DEV}
+            - LOGS=${LOGS}
+        volumes:
+            - ./.docker/openresty/templates:/usr/local/openresty/nginx/templates
+            - ./app/frontend/dist:/usr/local/openresty/nginx/html
+            - ./app/backend:/root/app/backend
+        networks:
+            nginx_net:
+        command: /bin/bash -c "envsubst '$${DB_PORT} $${DEV} $${LOGS}' < /usr/local/openresty/nginx/templates/nginx.conf.template > /usr/local/openresty/nginx/conf/nginx.conf && cd /root/app/backend && make && cd /root/app/backend/src && /usr/local/openresty/bin/openresty -g 'daemon off;'"
+        depends_on:
+            - db
+    db:
+        container_name: db-${PROJECT_NAME}
+        image: postgres:latest
+        restart: always
+        environment:
+            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+        volumes:
+            - ./.docker/postgres/conf:/docker-entrypoint-initdb.d/
+        networks:
+            nginx_net:
+        ports:
+            - 127.0.0.1:${DB_PORT}:5432
