@@ -5,7 +5,6 @@
 <script>
 import { computed, watch } from 'vue'
 import titleMixin from './mixins/titleMixin'
-import API from './helpers/api'
 
 export default {
     name: 'App',
@@ -13,9 +12,6 @@ export default {
     data() {
         return {
             App: {
-                helpers: {
-                    $api: API,
-                },
                 title: 'Web App Creator',
                 appHeader: 'App',
             }
