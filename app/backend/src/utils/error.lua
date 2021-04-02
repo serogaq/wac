@@ -1,5 +1,8 @@
 local ngx = _G.ngx
 local get_error = {}
+local status = {}
+
+--[[ API Error Codes ]]--
 
 -- Global
 
@@ -30,15 +33,19 @@ end
 function get_error.field_not_found(field)
 	return { errorCode = 4010, field = field }
 end
+
 function get_error.field_invalid(field)
 	return { errorCode = 4010, field = field }
 end
+
 function get_error.field_not_unique(field)
 	return { errorCode = 4010, field = field }
 end
+
 function get_error.token_expired(field)
 	return { errorCode = 4010, field = field }
 end
+
 function get_error.password_not_match()
 	return { errorCode = 4010 }
 end
@@ -48,15 +55,19 @@ end
 function get_error.database_unresponsive()
 	return { errorCode = 4010 }
 end
+
 function get_error.database_create()
 	return { errorCode = 4010 }
 end
+
 function get_error.database_modify()
 	return { errorCode = 4010 }
 end
+
 function get_error.database_delete()
 	return { errorCode = 4010 }
 end
+
 function get_error.database_select()
 	return { errorCode = 4010 }
 end
