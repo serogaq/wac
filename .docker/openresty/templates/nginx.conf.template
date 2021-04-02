@@ -1,0 +1,53 @@
+env PROJECT_NAME=${PROJECT_NAME};
+env DB_HOST=${DB_HOST};
+env DB_PORT=${DB_PORT};
+env DB_NAME=${DB_NAME};
+env DB_USER=${DB_USER};
+env DB_PASSWORD=${DB_PASSWORD};
+env ENVIRONMENT=${ENVIRONMENT};
+env LAPIS_ENVIRONMENT=${ENVIRONMENT};
+env LOGS=${LOGS};
+env SECRET=${SECRET};
+worker_processes auto;
+error_log stderr notice;
+pid logs/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include mime.types;
+
+    server {
+        listen 80;
+        server_name localhost;
+        client_max_body_size 50M;
+        gzip on;
+        gzip_types text/plain application/json application/javascript text/css;
+        index index.html;
+        lua_code_cache on;
+
+        location / {
+            try_files $uri $uri/ @rewrites;
+        }
+
+        location @rewrites {
+            rewrite ^(.+)$ /index.html last;
+        }
+
+        location ~ ^/api {
+            root /root/app/backend/src;
+            default_type text/html;
+            content_by_lua 'require("lapis").serve("app")';
+        }
+
+        location /static/ {
+            alias html/static/;
+        }
+
+        location /favicon.ico {
+            alias html/static/favicon.ico;
+        }
+    }
+}
