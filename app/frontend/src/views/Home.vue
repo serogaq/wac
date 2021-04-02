@@ -10,9 +10,9 @@ export default {
     inject: ['App'],
     async created() {
         this.$nextTick(() => this.App.value.title = 'Home');
-        let res = await this.$api.Get('/test').ready();
+        let res = await this.$api.Post('/tests', { data: { test: true } }).ready();
         let data = await res.json();
-        console.log(data.ok);
+        console.log(data);
     },
 }
 </script>

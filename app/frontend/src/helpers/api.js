@@ -2,7 +2,7 @@ import { mergeDeep } from './utils';
 export default {
     Get,
     Post,
-    Patch,
+    Put,
     Delete,
 };
 
@@ -57,13 +57,13 @@ function Post(endpoint, params, fetchOpts = {}) {
     return abortableFetch(ApiURL + endpoint, opts);
 }
 
-function Patch(endpoint, params, fetchOpts = {}) {
+function Put(endpoint, params, fetchOpts = {}) {
     if(!endpoint) {
-        console.error('Using $api.Patch without endpoint');
+        console.error('Using $api.Put without endpoint');
         return;
     }
     let defaultOpts = {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
