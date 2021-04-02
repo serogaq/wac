@@ -1,3 +1,13 @@
+env PROJECT_NAME=${PROJECT_NAME};
+env DB_HOST=${DB_HOST};
+env DB_PORT=${DB_PORT};
+env DB_NAME=${DB_NAME};
+env DB_USER=${DB_USER};
+env DB_PASSWORD=${DB_PASSWORD};
+env ENVIRONMENT=${ENVIRONMENT};
+env LAPIS_ENVIRONMENT=${ENVIRONMENT};
+env LOGS=${LOGS};
+env SECRET=${SECRET};
 worker_processes auto;
 error_log stderr notice;
 pid logs/nginx.pid;

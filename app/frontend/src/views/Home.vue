@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <ViewLayout>
+        Home
+    </ViewLayout>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+    name: 'Home',
+    inject: ['App'],
+    async created() {
+        this.$nextTick(() => this.App.value.title = 'Home');
+        let res = await this.$api.Post('/tests', { data: { test: true } }).ready();
+        let data = await res.json();
+        console.log(data);
+    },
 }
 </script>
