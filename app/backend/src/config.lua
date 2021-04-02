@@ -14,6 +14,7 @@ config({"development", "production"}, {
     },
     logs = tonumber(os.getenv('LOGS')),
     app_name = os.getenv('PROJECT_NAME'),
+    environment = os.getenv('ENVIRONMENT')
 })
 
 if tonumber(os.getenv('LOGS')) == 1 then
