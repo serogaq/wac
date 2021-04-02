@@ -1,8 +1,5 @@
 local ngx = _G.ngx
 local get_error = {}
-local status = {}
-
---[[ API Error Codes ]]--
 
 -- Global
 
